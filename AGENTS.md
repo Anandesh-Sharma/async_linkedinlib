@@ -129,3 +129,8 @@ Use focused tests while developing, then the full package suite for changes to
 auth, transport, sessions or public imports. Do not contact LinkedIn in the normal
 test suite. Report live and simulated verification separately. Keep detailed
 documentation in the package README and these rules; plans belong in `tasks/`. Do not create a separate documentation site.
+
+## After pushing
+
+After every push, wait for all triggered CI/CD runs for that exact commit to pass.
+Fix failures and recheck before declaring completion; report any external blocker.

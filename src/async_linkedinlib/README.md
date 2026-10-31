@@ -67,11 +67,13 @@ import asyncio
 from pathlib import Path
 from async_linkedinlib import LinkedIn
 
+
 async def main():
     path = Path.home() / ".local/share/async_linkedinlib/account.session.json"
     async with LinkedIn.from_session_file(path) as linkedin:
         me = await linkedin.account.me()
         print(me.full_name, me.id)
+
 
 asyncio.run(main())
 ```
@@ -176,7 +178,9 @@ from async_linkedinlib import CommentScope, Image, MediaKind, Mention, Visibilit
 
 text = "Hello from Ada Lovelace"
 shared = await linkedin.posts.create(
-    text, visibility=Visibility.CONNECTIONS_ONLY, comments=CommentScope.ANYONE,
+    text,
+    visibility=Visibility.CONNECTIONS_ONLY,
+    comments=CommentScope.ANYONE,
     mentions=[Mention("urn:li:fsd_profile:<id>", text.index("Ada"), 12)],
 )
 photo = await linkedin.posts.media.upload("photo.png", MediaKind.IMAGE)
@@ -254,18 +258,19 @@ People, company, group and service results stop at 1,000; `total` is an estimate
 ```python
 from pathlib import Path
 
-form = await linkedin.jobs.application(job.id)       # pages, questions, offered resumes
+form = await linkedin.jobs.application(job.id)  # pages, questions, offered resumes
 for question in form.questions:
     print(question.label, question.kind, [o.label for o in question.options])
 resume = await linkedin.jobs.upload_file(
-    Path("resume.pdf"), max_size=form.file("Resume").max_size     # refuse before storing
+    Path("resume.pdf"),
+    max_size=form.file("Resume").max_size,  # refuse before storing
 )
 submission = linkedin.jobs.submission(
     form, {"Mobile phone number": "5550100"}, files={"Resume": resume}, job=job
 )
-for label, values in submission.answers:            # checked locally; nothing sent yet
+for label, values in submission.answers:  # checked locally; nothing sent yet
     print(label, values)
-status = await linkedin.jobs.submit(submission)      # applies; sent once
+status = await linkedin.jobs.submit(submission)  # applies; sent once
 ```
 
 | Operation | Method | Verified |
