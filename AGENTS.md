@@ -1,8 +1,16 @@
 # Rules for async_linkedinlib
 
 Follow these standalone library rules.
-Read this package's [README.md](README.md), the relevant source, and its tests before editing.
+Read the [root README](README.md), [package reference](src/async_linkedinlib/README.md), relevant source, and tests before editing.
 Keep this a standalone Python package; do not import the backend or `async_instalib`.
+
+## README style
+
+Keep the root README a short showcase: the benefit, a few features, installation,
+and one complete quick-start example. Link to examples and the
+[package README](src/async_linkedinlib/README.md) for API details, limitations, verification,
+architecture, contribution instructions and release steps. Do not expand the
+front page into API documentation. Update the package README when behavior changes.
 
 ## Structure and ownership
 
@@ -50,7 +58,7 @@ format and a 500-line source file limit.
    screens with server-driven protobuf (SDUI); the SDK does not parse SDUI UI trees and uses
    the Voyager operations the same APK ships, over JSON. Take variable names, enums and
    bodies from app code: the server silently ignores unknown variables. Record the app
-   version and evidence in the README. Distinguish observed behavior, locally tested
+   version and evidence in the package README. Distinguish observed behavior, locally tested
    behavior and live SDK verification.
 2. Define the smallest useful public method, typed result and expected failures.
    Keep IDs as strings. Preserve unknown versus absent fields rather than guessing.
@@ -58,7 +66,7 @@ format and a 500-line source file limit.
    transport. Do not spread provider payloads and URL construction through `client.py`.
 4. Test the request contract and meaningful failures with synthetic data. Use a real
    loopback server when serialization, cookies, streaming or lifecycle matters.
-5. Update the README's feature coverage, usage and limits. Add root exports only for
+5. Update the package README's feature coverage, usage and limits. Add root exports only for
    supported public types. An observed endpoint does not establish every capability
    or variation of that feature.
 
@@ -119,5 +127,5 @@ uv build
 
 Use focused tests while developing, then the full package suite for changes to
 auth, transport, sessions or public imports. Do not contact LinkedIn in the normal
-test suite. Report live and simulated verification separately. Keep lasting
-documentation in this README and these rules; plans belong in `tasks/`. Do not create a separate documentation site.
+test suite. Report live and simulated verification separately. Keep detailed
+documentation in the package README and these rules; plans belong in `tasks/`. Do not create a separate documentation site.
