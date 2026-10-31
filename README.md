@@ -1,18 +1,18 @@
 <p align="center">
-  <img src="assets/banner.png" alt="async_linkedinlib — Async Python for LinkedIn" width="100%">
+  <img src="https://raw.githubusercontent.com/Anandesh-Sharma/async_linkedinlib/main/assets/banner.png" alt="async_linkedinlib — Async Python for LinkedIn" width="100%">
 </p>
 
 # async_linkedinlib
 
 [![CI](https://github.com/Anandesh-Sharma/async_linkedinlib/actions/workflows/ci.yml/badge.svg)](https://github.com/Anandesh-Sharma/async_linkedinlib/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/async_linkedinlib?color=111111)](https://pypi.org/project/async_linkedinlib/)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-111111?logo=python&logoColor=white)
-[![MIT license](https://img.shields.io/badge/license-MIT-111111)](LICENSE)
+[![MIT license](https://img.shields.io/badge/license-MIT-111111)](https://github.com/Anandesh-Sharma/async_linkedinlib/blob/main/LICENSE)
 ![Typed](https://img.shields.io/badge/typing-PEP%20561-111111)
 
 Async Python client for LinkedIn's private Android API (app 4.1.1267). One saved session
 drives everything: sign-in, the feed, your posts, comments, search and jobs with Easy Apply.
-Connections and messages are not built yet. Python 3.11+ is required. This package has not
-been published to PyPI.
+Connections and messages are not built yet. Python 3.11+ is required.
 
 ## At a glance
 
@@ -41,10 +41,10 @@ Saved-session ownership uses POSIX file locks; use macOS or Linux.
 
 ## Install
 
-Requires Python 3.11 or newer. Install directly from GitHub:
+Requires Python 3.11 or newer. Install from PyPI:
 
 ```sh
-pip install "git+https://github.com/Anandesh-Sharma/async_linkedinlib.git"
+pip install async_linkedinlib
 ```
 
 For development and the `uv run` examples below:
@@ -55,8 +55,7 @@ cd async_linkedinlib
 uv sync --locked
 ```
 
-The package has not been published to PyPI. For reproducible deployments, pin the
-Git URL to a reviewed commit: `git+https://github.com/Anandesh-Sharma/async_linkedinlib.git@<commit-sha>`.
+For reproducible deployments, pin a PyPI version or install a reviewed Git commit: `git+https://github.com/Anandesh-Sharma/async_linkedinlib.git@<commit-sha>`.
 
 ## Saved sessions
 
@@ -135,8 +134,8 @@ The app draws feed, post, comment, search and job screens with server-driven pro
 same APK still ships the classic Voyager operations, and Voyager answers plain JSON on the
 same session, so every feature calls those: persisted GraphQL queries and mutations
 (`/voyager/api/graphql`) and rest.li routes (`/voyager/api/<route>`), with variables encoded
-exactly as the app encodes them ([transport/voyager.py](src/async_linkedinlib/transport/voyager.py),
-[transport/restli.py](src/async_linkedinlib/transport/restli.py)). Query IDs, variable names,
+exactly as the app encodes them ([transport/voyager.py](https://github.com/Anandesh-Sharma/async_linkedinlib/blob/main/src/async_linkedinlib/transport/voyager.py),
+[transport/restli.py](https://github.com/Anandesh-Sharma/async_linkedinlib/blob/main/src/async_linkedinlib/transport/restli.py)). Query IDs, variable names,
 enums and bodies come from the app's code; each was then checked against the live service.
 
 Every resource shares the client's one session and connection pool. Lists return a
@@ -354,7 +353,7 @@ AGENTS.md                   library architecture and contribution rules
 The call path is `LinkedIn resource → Voyager → Transport → LinkedIn HTTP endpoint`.
 All resources use the client's one session and transport. Models contain data;
 resources own feature behavior; the client assembles them and manages lifetime.
-See [AGENTS.md](AGENTS.md) before adding functionality.
+See [AGENTS.md](https://github.com/Anandesh-Sharma/async_linkedinlib/blob/main/AGENTS.md) before adding functionality.
 
 ### Feature status
 
@@ -437,4 +436,22 @@ session files, raw captures and real account data out of issues and pull request
 
 ## License
 
-[MIT](LICENSE) © 2026 Anandesh Sharma.
+[MIT](https://github.com/Anandesh-Sharma/async_linkedinlib/blob/main/LICENSE) © 2026 Anandesh Sharma.
+
+## Releases
+
+Publishing a GitHub release runs the complete CI matrix, builds a wheel and source
+archive, validates package metadata, and uploads both to PyPI with
+[trusted publishing](https://docs.pypi.org/trusted-publishers/). No stored PyPI token
+is needed. The publisher is bound to `Anandesh-Sharma/async_linkedinlib`, `release.yml`, and
+the GitHub environment `pypi`.
+
+1. Update `project.version` in `pyproject.toml`, run `uv lock`, and commit to `main`.
+2. Publish a GitHub release with the matching tag `v<version>` from that commit.
+3. Check the [publishing workflow](https://github.com/Anandesh-Sharma/async_linkedinlib/actions/workflows/release.yml) and
+   [PyPI project](https://pypi.org/project/async_linkedinlib/).
+
+Tags must match the package version exactly and point to a commit on `main`.
+A draft release does not publish. A published prerelease does; use a matching
+PEP 440 prerelease version such as `0.3.0rc1`. Re-running a release skips files
+already present only after checking their SHA-256 hashes match the build.
